@@ -92,7 +92,11 @@ NEWFILEUID:NONE
     });
 
     ofx += endOfx();
-    document.location = 'data:application/x-ofx,'+encodeURIComponent(ofx);
+
+    link = document.createElement("a");
+    link.setAttribute("href", 'data:application/x-ofx,'+encodeURIComponent(ofx));
+    link.setAttribute("download", "fatura-nubank.ofx");
+    link.click();      
   }
 
   $(document).on('DOMNodeInserted', '.summary .nu-button:contains(Gerar boleto)', function () {
