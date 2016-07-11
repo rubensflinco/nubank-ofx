@@ -1,7 +1,7 @@
 
 $(function() {
 
-  function startOfx() {
+  function startOfx(from, to) {
     return `
 OFXHEADER:100
 DATA:OFXSGML
@@ -35,7 +35,9 @@ NEWFILEUID:NONE
             <ACCTID>0</ACCTID>
             <ACCTTYPE>LINEOFCREDIT</ACCTTYPE>
         </BANKACCTFROM>
-        <BANKTRANLIST>`;
+        <BANKTRANLIST>
+          <DTSTART>${from}</DTSTART>
+          <DTEND>${to}</DTEND>`;
           }
         
           function endOfx() {
@@ -99,7 +101,7 @@ NEWFILEUID:NONE
   }
 
   function generateOfx() {
-    var ofx = startOfx();
+    var ofx = startOfx(normalizeDate($(this).find('.period>span')[0].text()), normalizeDate($(this).find('.period>span')[1].text()));
 
     $('.charge:visible').each(function(){
       var date = normalizeDate($(this).find('.time').text());
