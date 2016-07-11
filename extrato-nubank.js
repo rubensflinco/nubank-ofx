@@ -20,7 +20,6 @@ NEWFILEUID:NONE
               <CODE>0
               <SEVERITY>INFO
           </STATUS>
-          <DTSERVER>20160711
           <LANGUAGE>ENG
           <FI>
               <ORG>NUBANK
