@@ -101,7 +101,7 @@ NEWFILEUID:NONE
   }
 
   function generateOfx() {
-    var ofx = startOfx(normalizeDate($(this).find('.period>span')[0].text()), normalizeDate($(this).find('.period>span')[1].text()));
+    var ofx = startOfx(normalizeDate($.find('.period>span')[0].text()), normalizeDate($.find('.period>span')[1].text()));
 
     $('.charge:visible').each(function(){
       var date = normalizeDate($(this).find('.time').text());
