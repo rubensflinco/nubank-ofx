@@ -27,7 +27,7 @@ NEWFILEUID:NONE
 </STMTTRNRS>
 </BANKMSGSRSV1>
 </OFX>`;
-    
+
   }
 
   function bankStatement(date, amount, description) {
@@ -71,7 +71,7 @@ NEWFILEUID:NONE
     var dateArray = date.split(' ');
     if (dateArray.length > 2) {
       return '20'+dateArray[2];
-    } else { 
+    } else {
       return new Date().getFullYear();
     };
   }
@@ -93,15 +93,20 @@ NEWFILEUID:NONE
 
     ofx += endOfx();
 
+    var openMonth = " " + $($.find('md-tab.ng-scope.active .period')[0]).text().trim();
+    var period = normalizeYear(openMonth) + "-" + normalizeMonth(openMonth);
     link = document.createElement("a");
     link.setAttribute("href", 'data:application/x-ofx,'+encodeURIComponent(ofx));
-    link.setAttribute("download", "fatura-nubank.ofx");
-    link.click();      
+    link.setAttribute("download", "nubank-" + period + ".ofx");
+    link.click();
   }
 
-  $(document).on('DOMNodeInserted', '.summary .nu-button:contains(Gerar boleto)', function () {
-    $('<button class="nu-button secondary" role="gen-ofx">Exportar OFX</button>')
-    .insertAfter('.summary .nu-button')
+  $(document).on('DOMNodeInserted', ".summary .nu-button:not(:contains('OFX'))", function () {
+    if ($(".summary.open [role=\"gen-ofx\"]").length > 0) {
+      return;
+    }
+    $('<button class="nu-button secondary" role="gen-ofx">Exportar para OFX</button>')
+    .insertAfter('.summary.open .nu-button')
     .click(generateOfx);
   });
 });
