@@ -1,4 +1,4 @@
-$(function() {
+(function() {
 
   function startOfx() {
     return `
@@ -82,46 +82,48 @@ NEWFILEUID:NONE
   function generateOfx() {
     var ofx = startOfx();
 
-    $('.charge:visible').each(function(){
-      var date = normalizeDate($(this).find('.time').text());
-      var description = $(this).find('.description').text();
-      var amount = normalizeAmount($(this).find('.amount').text());
+    document.querySelectorAll('.charge:not([style=\'display:none\'])').forEach(function(charge){
+      const date = normalizeDate(charge.querySelector('.time').textContent);
+      const description = charge.querySelector('.description').textContent.trim();
+      const amount = normalizeAmount(charge.querySelector('.amount').textContent);
 
       ofx += bankStatement(date, amount, description);
     });
 
     ofx += endOfx();
 
-    var openMonth = " " + $($.find('md-tab.ng-scope.active .period')[0]).text().trim();
-    var period = normalizeYear(openMonth) + "-" + normalizeMonth(openMonth);
-    link = document.createElement("a");
-    link.setAttribute("href", 'data:application/x-ofx,'+encodeURIComponent(ofx));
-    link.setAttribute("download", "nubank-" + period + ".ofx");
-    link.click();
+  const createExportButton = () => {
+    const button = document.createElement('button');
+
+    button.classList.add('nu-button');
+    button.classList.add('secondary');
+    button.setAttribute('role', 'gen-ofx');
+    button.textContent = "Exportar para OFX";
+
+    button.addEventListener('click', generateOfx)
+
+    return button;
   }
 
-  const insertExportButtonCallback = function(mutationList, observer) {
-    if(mutationList == undefined) return;
+  const exportOfxButtonAlreadyExists = () =>
+    document.querySelectorAll(".summary.open [role=\"gen-ofx\"]").length > 0
 
-    if ($(".summary.open [role=\"gen-ofx\"]").length > 0) {
-      return;
-    }
+  const insertExportButtonCallback = (mutationList, observer) => {
+    if(mutationList == undefined || exportOfxButtonAlreadyExists()) return;
 
-    const targetElement = document.querySelector('.summary.open .nu-button');
-    if (targetElement == undefined) {
-      console.log('n achei o botao');
-      return;
-    }
-    $('<button class="nu-button secondary" role="gen-ofx">Exportar para OFX</button>')
-    .insertAfter('.summary.open .nu-button')
-    .click(generateOfx);
+    const generateBoletoButton = document.querySelector('.summary.open .nu-button');
+    if (generateBoletoButton == undefined) return;
+
+    const exportOfxButton =  createExportButton();
+    generateBoletoButton.parentNode.appendChild(exportOfxButton);
 
     observer.disconnect();
   }
 
+  const targetElement = document.querySelector('.bills-browser');
   const config = { attributes: true, childList: true, subtree: true }
 
   const observer = new MutationObserver(insertExportButtonCallback);
-  observer.observe(document, config)
-});
+  observer.observe(targetElement, config)
+})();
 
