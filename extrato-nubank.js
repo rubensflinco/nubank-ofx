@@ -1,4 +1,3 @@
-
 $(function() {
 
   function startOfx() {
@@ -101,12 +100,28 @@ NEWFILEUID:NONE
     link.click();
   }
 
-  $(document).on('DOMNodeInserted', ".summary .nu-button:not(:contains('OFX'))", function () {
+  const insertExportButtonCallback = function(mutationList, observer) {
+    if(mutationList == undefined) return;
+
     if ($(".summary.open [role=\"gen-ofx\"]").length > 0) {
+      return;
+    }
+
+    const targetElement = document.querySelector('.summary.open .nu-button');
+    if (targetElement == undefined) {
+      console.log('n achei o botao');
       return;
     }
     $('<button class="nu-button secondary" role="gen-ofx">Exportar para OFX</button>')
     .insertAfter('.summary.open .nu-button')
     .click(generateOfx);
-  });
+
+    observer.disconnect();
+  }
+
+  const config = { attributes: true, childList: true, subtree: true }
+
+  const observer = new MutationObserver(insertExportButtonCallback);
+  observer.observe(document, config)
 });
+
