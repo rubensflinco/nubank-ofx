@@ -1,6 +1,6 @@
 (function() {
 
-  function startOfx() {
+  const startOfx = () => {
     return `
 OFXHEADER:100
 DATA:OFXSGML
@@ -19,37 +19,32 @@ NEWFILEUID:NONE
 <BANKTRANLIST>`;
   }
 
-  function endOfx() {
-    return `
+  const endOfx = () =>
+    `
 </BANKTRANLIST>
 </STMTRS>
 </STMTTRNRS>
 </BANKMSGSRSV1>
 </OFX>`;
 
-  }
-
-  function bankStatement(date, amount, description) {
-    return `
+  const bankStatement = (date, amount, description) =>
+    `
 <STMTTRN>
 <TRNTYPE>OTHER</TRNTYPE>
 <DTPOSTED>${date}</DTPOSTED>
 <TRNAMT>${amount}</TRNAMT>
 <MEMO>${description}</MEMO>
 </STMTTRN>`;
-  }
 
-  function normalizeAmount(text) {
-    return text.replace('.', '').replace(',','.');
-  }
+  const normalizeAmount = (text) =>
+    text.replace('.', '').replace(',','.');
 
-  function normalizeDay(date) {
-    return date.split(' ')[0]
-  }
+  const normalizeDay = (date) =>
+    date.split(' ')[0];
 
-  function normalizeMonth(date) {
-    var month = date.split(' ')[1]
-    var months = {
+  const normalizeMonth = (date) => {
+    const month = date.split(' ')[1]
+    const months = {
       'Jan': '01',
       'Fev': '02',
       'Mar': '03',
@@ -63,11 +58,12 @@ NEWFILEUID:NONE
       'Nov': '11',
       'Dez': '12'
     }
+
     return months[month];
   }
 
-  function normalizeYear(date) {
-    var dateArray = date.split(' ');
+  const normalizeYear = (date) => {
+    const dateArray = date.split(' ');
     if (dateArray.length > 2) {
       return '20'+dateArray[2];
     } else {
@@ -75,12 +71,20 @@ NEWFILEUID:NONE
     };
   }
 
-  function normalizeDate(date) {
-    return normalizeYear(date)+normalizeMonth(date)+normalizeDay(date);
+  const normalizeDate = (date) =>
+    normalizeYear(date)+normalizeMonth(date)+normalizeDay(date);
+
+  const exportOfx = (ofx) => {
+    const openMonth = " " + document.querySelector('md-tab.ng-scope.active .period').textContent.trim();
+    const period = normalizeYear(openMonth) + "-" + normalizeMonth(openMonth);
+    link = document.createElement("a");
+    link.setAttribute("href", 'data:application/x-ofx,'+encodeURIComponent(ofx));
+    link.setAttribute("download", "nubank-" + period + ".ofx");
+    link.click();
   }
 
-  function generateOfx() {
-    var ofx = startOfx();
+  const generateOfx = () => {
+    let ofx = startOfx();
 
     document.querySelectorAll('.charge:not([style=\'display:none\'])').forEach(function(charge){
       const date = normalizeDate(charge.querySelector('.time').textContent);
@@ -91,6 +95,8 @@ NEWFILEUID:NONE
     });
 
     ofx += endOfx();
+    exportOfx(ofx);
+  }
 
   const createExportButton = () => {
     const button = document.createElement('button');
