@@ -3,7 +3,7 @@
 
   "name": "NuBank OFX",
   "description": "Adiciona um botão para exportação do extrato em OFX do NuBank",
-  "version": "1.0",
+  "version": "1.1",
   "icons": { "16": "nubank-ofx-16.png",
            "48": "nubank-ofx-48.png",
           "128": "nubank-ofx-128.png" },
