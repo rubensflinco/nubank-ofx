@@ -8,7 +8,7 @@
            "48": "nubank-ofx-48.png",
           "128": "nubank-ofx-128.png" },
   "content_scripts": [{
-    "matches": ["https://app.nubank.com.br/*"],
+    "matches": ["https://*.nubank.com.br/*"],
     "js": ["extrato-nubank.js"]
   }]
 }
