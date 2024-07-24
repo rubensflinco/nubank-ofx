@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "NuBank OFX - Meu Dinheiro Web",
   "description": "Adicione botão para exportar extrato OFX do NuBank para Meu Dinheiro Web com data da fatura ou da compra.",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "icons": {
     "16": "icon16.png",
     "19": "icon19.png",
@@ -21,9 +21,6 @@
       "128": "icon128.png"
     }
   },
-  "permissions": [
-    "activeTab"
-  ],
   "content_scripts": [{
     "matches": ["https://*.nubank.com.br/*"],
     "js": ["extrato-nubank.js"]
