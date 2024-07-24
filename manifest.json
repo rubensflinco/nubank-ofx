@@ -1,18 +1,24 @@
 {
   "manifest_version": 3,
-  "name": "NuBank OFX - MeuDinheiroWeb",
-  "description": "Adiciona um botão para exportação do extrato em OFX do NuBank otimizado para MeuDinheiroWeb, com opção de exportar com a data das transalações na fatura ou com as datas da compra da transalação que geralmente tem uma diferença de 1 dia.",
-  "version": "2",
+  "name": "NuBank OFX - Meu Dinheiro Web",
+  "description": "Adiciona um botão para exportação do extrato em OFX do NuBank otimizado para Meu Dinheiro Web, com opção de exportar com a data das transalações na fatura ou com as datas da compra da transalação que geralmente tem uma diferença de 1 dia.",
+  "version": "4.0.0",
   "icons": {
-    "16": "nubank-ofx-16.png",
-    "48": "nubank-ofx-48.png",
-    "128": "nubank-ofx-128.png"
+    "16": "icon16.png",
+    "19": "icon19.png",
+    "32": "icon32.png",
+    "38": "icon38.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
   "action": {
     "default_icon": {
-      "16": "nubank-ofx-16.png",
-      "48": "nubank-ofx-48.png",
-      "128": "nubank-ofx-128.png"
+      "16": "icon16.png",
+      "19": "icon19.png",
+      "32": "icon32.png",
+      "38": "icon38.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
     }
   },
   "permissions": [
